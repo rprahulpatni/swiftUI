@@ -1,0 +1,145 @@
+//
+//  EditProfileViewModel.swift
+//  SwiftUIDemo
+//
+//  Created by Neosoft on 13/07/23.
+//
+
+import Foundation
+import Firebase
+import FirebaseStorage
+import FirebaseFirestore
+import UIKit
+
+protocol iEditProfileViewModel {
+    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: Date)-> EditProfileValidator
+}
+
+class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
+    
+    @Published var user: AuthUserData?
+    @Published var userProfilePic = ""
+    @Published var userName = ""
+    @Published var userEmail = ""
+    @Published var userCountryCode = ""
+    @Published var userMobile = ""
+    @Published var userGender = ""
+    @Published var userDOB = Date.now
+    @Published var selectedImage : UIImage? = nil
+    @Published var selectedImageData : Data? = nil
+    
+    @Published var errorMessage = ""
+    @Published var showAlert = false
+    @Published var isProfileUpdated = false
+    
+    let sessionManager: SessionManager?
+    
+    init(iSessionManager: SessionManager?, iUserData: AuthUserData?) {
+        self.user = iUserData
+        self.sessionManager = iSessionManager
+        if let userData = self.user {
+            self.userName = userData.name ?? ""
+            self.userEmail = userData.email ?? ""
+            self.userCountryCode = userData.countryCode ?? ""
+            self.userMobile = userData.mobile ?? ""
+            self.userDOB = userData.dob ?? Date()
+            self.userGender = userData.gender ?? ""
+            self.selectedImageData = try! Data(contentsOf: URL(string: userData.profilePic ?? "")!)
+        }
+    }
+    
+    //    func fetchUser() {
+    //        guard let uid = Auth.auth().currentUser?.uid else { return }
+    //        let userRef = Firestore.firestore().collection("users").document(uid)
+    //        userRef.getDocument { (document, error) in
+    //            if let document = document, document.exists {
+    //                if let user = AuthUserData(document: document) {
+    //                    self.user = user
+    //                    if let userData = self.user {
+    //                        self.userName = userData.name ?? ""
+    //                        self.userEmail = userData.email ?? ""
+    //                        self.userCountryCode = userData.countryCode ?? ""
+    //                        self.userMobile = userData.mobile ?? ""
+    //                        self.userDOB = userData.dob ?? Date()
+    //                        self.userGender = userData.gender ?? ""
+    //                        self.selectedImageData = try! Data(contentsOf: URL(string: userData.profilePic ?? "")!)
+    //                    }
+    //                }
+    //            } else {
+    //                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
+    //            }
+    //        }
+    //    }
+    
+    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: Date) -> EditProfileValidator {
+        guard userName.isNotEmpty else {
+            return .failure(.userName, StringConstants.LoginSignUp.userNameBlank)
+        }
+        guard userEmail.isNotEmpty else {
+            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailBlank)
+        }
+        guard userEmail.isValidEmail else {
+            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailValid)
+        }
+        guard userCountryCode.isNotEmpty else {
+            return .failure(.userCountryCode, StringConstants.LoginSignUp.userCountryCodeBlank)
+        }
+        guard userMobile.isNotEmpty else {
+            return .failure(.userMobile, StringConstants.LoginSignUp.userMobileBlank)
+        }
+        guard userMobile.isValidMobile else {
+            return .failure(.userEmail, StringConstants.LoginSignUp.userMobileValid)
+        }
+        let dob = DateFormatter.longDateFormatter.string(from: userDOB)
+        guard dob.isNotEmpty else {
+            return .failure(.userMobile, StringConstants.LoginSignUp.userDOBBlank)
+        }
+        return .success
+    }
+    
+    func editProfile() {
+        let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: self.userDOB)
+        switch response {
+        case .success:
+            self.showAlert = false
+            self.uploadUserProfile()
+            break
+        case .failure(let type, let msg):
+            print(type, msg)
+            self.showAlert = true
+            self.errorMessage = msg
+        }
+    }
+    
+    func uploadUserProfile() {
+        self.sessionManager?.uploadImageToFirebaseStorage(image: self.selectedImage) { imageUrl, failure in
+            if failure.isNotEmpty {
+                self.errorMessage = failure
+                self.showAlert = true
+            } else {
+                self.userProfilePic = imageUrl
+                let updatedData: [String: Any] = [
+                    "profilePic": self.userProfilePic,
+                    "name": self.userName,
+                    "email": self.userEmail,
+                    "dob": self.userDOB,
+                    "gender": self.userGender,
+                    "countryCode": self.userCountryCode,
+                    "mobile": self.userMobile
+                ]
+                
+                // Call the function to update user information
+                self.sessionManager?.addUserInformation(userData: updatedData) { success, error in
+                    let err = failure
+                    if err.isNotEmpty {
+                        self.errorMessage = err
+                        self.showAlert = true
+                    } else {
+                        self.isProfileUpdated = true
+                        self.showAlert = true
+                    }
+                }
+            }
+        }
+    }
+}
