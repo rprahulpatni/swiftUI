@@ -40,6 +40,7 @@ struct Home: View {
                 }.onAppear(perform: {
                     homeVM.getUsersList()
                 })
+                .modifier(CustomLoaderModifier(isLoading: self.$homeVM.isLoading))
             }.navigationBarTitle("HOME",displayMode: .inline)
         }
     }

@@ -9,7 +9,7 @@ import Foundation
 
 class HomeViewModel: ObservableObject {
     @Published var arrUsers: Array<UsersData> = Array<UsersData>()
-    @Published var isShowProgress: Bool = false
+    @Published var isLoading: Bool = false
 
     private var resources : UsersResources = UsersResources()
     var totalPages: Int = 0
@@ -26,7 +26,7 @@ class HomeViewModel: ObservableObject {
 //    }
 //
     func getUsersList() {
-        self.isShowProgress = true
+        self.isLoading = true
         resources.getUsersList(limit, skip) { [weak self] result in
             switch result {
             case .success(let usersData):
@@ -35,11 +35,11 @@ class HomeViewModel: ObservableObject {
                     self?.totalPages = usersData!.total
                     self?.limit = usersData!.limit
                     self?.arrUsers.append(contentsOf: usersData!.users)
-                    self?.isShowProgress = false
+                    self?.isLoading = false
                 }
             case .failure(let err):
                 print(err.localizedDescription)
-                self?.isShowProgress = false
+                self?.isLoading = false
             }
         }
     }

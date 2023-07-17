@@ -21,6 +21,7 @@ struct Search: View {
                     .onAppear(perform: {
                         searchVM.getProductsList()
                     })
+                    .modifier(CustomLoaderModifier(isLoading: self.$searchVM.isLoading))
                     .navigationBarTitle("PRODUCTS", displayMode: .inline)
                     .searchable(text: $searchVM.searchText)
         }

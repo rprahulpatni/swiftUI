@@ -14,7 +14,7 @@ class SearchViewModel: ObservableObject {
     @Published var arrProducts : Array<ProductsModel> = Array<ProductsModel>()
 
     @Published var searchText: String = ""
-    @Published var isShowProgress: Bool = false
+    @Published var isLoading: Bool = false
 
     var filteredPost : [ProductsModel] {
         guard !searchText.isEmpty else { return arrProducts }
@@ -40,16 +40,20 @@ class SearchViewModel: ObservableObject {
 //    }
     
     func getProductsList() {
+        self.isLoading = true
+        self.arrProducts.removeAll()
         resources.getProductList() { result in
             switch result {
             case .success(let products):
                 DispatchQueue.main.async {
                     print(products)
                     self.arrProducts.append(contentsOf: products)
+                    self.isLoading = false
                 }
             case .failure(let err):
                 print(err.localizedDescription)
                 // inform about the error
+                self.isLoading = false
             }
         }
     }

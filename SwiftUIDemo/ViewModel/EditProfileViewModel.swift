@@ -33,7 +33,8 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
     @Published var errorMessage = ""
     @Published var showAlert = false
     @Published var isProfileUpdated = false
-    
+    @Published var isLoading: Bool = false
+
     let sessionManager: SessionManager?
     
     init(iSessionManager: SessionManager?, iUserData: AuthUserData?) {
@@ -104,6 +105,7 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
     }
     
     func editProfile() {
+        self.isLoading = true
         let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: DateFormatter.longDateFormatter.string(from: self.selectedDOB))
         switch response {
         case .success:
@@ -113,6 +115,7 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
         case .failure(let type, let msg):
             print(type, msg)
             self.showAlert = true
+            self.isLoading = false
             self.errorMessage = msg
         }
     }
@@ -122,6 +125,7 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
             if failure.isNotEmpty {
                 self.errorMessage = failure
                 self.showAlert = true
+                self.isLoading = false
             } else {
                 self.userProfilePic = imageUrl
                 let updatedData: [String: Any] = [
@@ -136,14 +140,16 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
                 ]
                 
                 // Call the function to update user information
-                self.sessionManager?.addUserInformation(userData: updatedData) { success, error in
-                    let err = failure
+                self.sessionManager?.updateUserInformation(userData: updatedData) { success, error in
+                    let err = error
                     if err.isNotEmpty {
                         self.errorMessage = err
                         self.showAlert = true
+                        self.isLoading = false
                     } else {
                         self.isProfileUpdated = true
                         self.showAlert = true
+                        self.isLoading = false
                     }
                 }
             }

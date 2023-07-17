@@ -13,10 +13,11 @@ struct CustomProgressView: View {
     var body: some View {
         if showProgressBar {
             ProgressView(label: {
-                Text("Loading...")
+                Text("Loading...").font(.headline)
             })
+            .progressViewStyle(.circular)
             .tint(.red)
-            .scaleEffect(2)
+//            .scaleEffect(2)
         }
     }
 }

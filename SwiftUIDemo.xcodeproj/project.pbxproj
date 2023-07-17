@@ -44,6 +44,7 @@
 		0A7820D42A601FA1004C84A5 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7820D32A601FA1004C84A5 /* EditProfileViewModel.swift */; };
 		0A7820D62A602436004C84A5 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7820D52A602436004C84A5 /* UserViewModel.swift */; };
 		0A7820D82A6024B5004C84A5 /* AuthUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7820D72A6024B5004C84A5 /* AuthUserModel.swift */; };
+		0A95A7492A65718B00C700A9 /* CustomLoaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A95A7482A65718B00C700A9 /* CustomLoaderModifier.swift */; };
 		0A9634822A5C40BC00311102 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A9634812A5C40BC00311102 /* CountryCodes.json */; };
 		0A99C82A2A2F21B10084B3D4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99C8292A2F21B10084B3D4 /* Home.swift */; };
 		0A99C82C2A2F21C20084B3D4 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99C82B2A2F21C20084B3D4 /* Search.swift */; };
@@ -111,6 +112,7 @@
 		0A7820D32A601FA1004C84A5 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		0A7820D52A602436004C84A5 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		0A7820D72A6024B5004C84A5 /* AuthUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUserModel.swift; sourceTree = "<group>"; };
+		0A95A7482A65718B00C700A9 /* CustomLoaderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLoaderModifier.swift; sourceTree = "<group>"; };
 		0A9634812A5C40BC00311102 /* CountryCodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		0A99C8292A2F21B10084B3D4 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		0A99C82B2A2F21C20084B3D4 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 		0A03A8622A2DF6BE00717A6E /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				0A95A7472A65716D00C700A9 /* CustomModifiers */,
 				0A5B85022A5C08900094E8AC /* CustomViews */,
 				0A5B85032A5C08C70094E8AC /* StringConstants.swift */,
 			);
@@ -324,6 +327,14 @@
 				0A7820D12A601F26004C84A5 /* EditProfileView.swift */,
 			);
 			path = ProfileViewDetails;
+			sourceTree = "<group>";
+		};
+		0A95A7472A65716D00C700A9 /* CustomModifiers */ = {
+			isa = PBXGroup;
+			children = (
+				0A95A7482A65718B00C700A9 /* CustomLoaderModifier.swift */,
+			);
+			path = CustomModifiers;
 			sourceTree = "<group>";
 		};
 		0A99C8282A2F219F0084B3D4 /* TabView */ = {
@@ -632,6 +643,7 @@
 				0A5B85012A5C02C60094E8AC /* LoginViewModel.swift in Sources */,
 				0A5B85062A5C2FFF0094E8AC /* SignUpViewModel.swift in Sources */,
 				0A5B84FF2A5C015A0094E8AC /* SignUpValidator.swift in Sources */,
+				0A95A7492A65718B00C700A9 /* CustomLoaderModifier.swift in Sources */,
 				0AB6F81D2A3076F1004A40C6 /* APIHelper.swift in Sources */,
 				0A5A40A12A30ADD800BBDF50 /* PostsResources.swift in Sources */,
 				0A99C82E2A2F21ED0084B3D4 /* GridView.swift in Sources */,

@@ -18,6 +18,10 @@ struct Profile: View {
         NavigationStack{
             VStack{
                 CustomUserForm(user: self.viewModel.user)
+                    .onAppear(perform: {
+                        viewModel.fetchUser()
+                    })
+                    .modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
             }.navigationBarTitle("PROFILE", displayMode: .inline)
                 .toolbar {
                     NavigationLink(destination: EditProfileView(viewModel: EditProfileViewModel(iSessionManager: self.sessionManager, iUserData: self.viewModel.user))) {
@@ -27,9 +31,6 @@ struct Profile: View {
                         self.shouldShowLogOutOptions = true
                     }, label: {
                         Image(systemName: "iphone.and.arrow.forward")
-                    })
-                    .onAppear(perform: {
-                        viewModel.fetchUser()
                     })
                     .alert(isPresented: $shouldShowLogOutOptions) {
                         Alert(title: Text("Are you sure you want to logout?"), primaryButton: .destructive(Text("OK"), action: {

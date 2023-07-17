@@ -143,6 +143,7 @@ struct EditProfileView: View {
                                 }
                             }
                     }
+                    .modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
                     .toolbar(.hidden, for: .tabBar)
                     .padding()
                     .navigationBarTitle("EDIT PROFILE", displayMode: .inline)

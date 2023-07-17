@@ -28,6 +28,7 @@ struct ListView: View {
                 .onAppear(perform: {
                     listVM.fetchUsersList()
                 })
+                .modifier(CustomLoaderModifier(isLoading: self.$listVM.isLoading))
             }.navigationBarTitle("USER'S LIST",displayMode: .inline)
         }
     }

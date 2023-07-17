@@ -13,7 +13,8 @@ import UIKit
 
 class UserViewModel: ObservableObject {
     @Published var user: AuthUserData?
-    
+    @Published var isLoading: Bool = false
+
 //    func fetchUser() {
 //        guard let uid = Auth.auth().currentUser?.uid else { return }
 //        let userRef = Firestore.firestore().collection("users").document(uid)
@@ -29,6 +30,7 @@ class UserViewModel: ObservableObject {
 //    }
     
     func fetchUser() {
+        self.isLoading = true
         guard let uid = Auth.auth().currentUser?.uid else { return }
         let usersRef = Database.database().reference().child("users")
         usersRef.child(uid).observeSingleEvent(of: .value) { snapshot in
@@ -36,8 +38,10 @@ class UserViewModel: ObservableObject {
                 // Access user information here
                 print("User Info: \(userInfo)")
                 self.user = AuthUserData(profilePic: userInfo["profilePic"] as? String ?? "", name:  userInfo["name"] as? String ?? "", email:  userInfo["email"] as? String ?? "", dob:  userInfo["dob"] as? String ?? "", gender:  userInfo["gender"] as? String ?? "", countryCode:  userInfo["countryCode"] as? String ?? "", mobile:  userInfo["mobile"] as? String ?? "", userId: userInfo["userId"] as? String ?? "")
+                self.isLoading = false
             } else {
                 print("User information not found")
+                self.isLoading = false
             }
         }
     }
