@@ -12,19 +12,21 @@ import FirebaseFirestore
 import UIKit
 
 protocol iEditProfileViewModel {
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: Date)-> EditProfileValidator
+    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String)-> EditProfileValidator
 }
 
 class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
     
     @Published var user: AuthUserData?
+    @Published var userId = ""
     @Published var userProfilePic = ""
     @Published var userName = ""
     @Published var userEmail = ""
     @Published var userCountryCode = ""
     @Published var userMobile = ""
     @Published var userGender = ""
-    @Published var userDOB = Date.now
+    @Published var userDOB = ""
+    @Published var selectedDOB : Date = Date.now
     @Published var selectedImage : UIImage? = nil
     @Published var selectedImageData : Data? = nil
     
@@ -42,9 +44,14 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
             self.userEmail = userData.email ?? ""
             self.userCountryCode = userData.countryCode ?? ""
             self.userMobile = userData.mobile ?? ""
-            self.userDOB = userData.dob ?? Date()
+            self.userDOB = userData.dob ?? ""
             self.userGender = userData.gender ?? ""
             self.selectedImageData = try! Data(contentsOf: URL(string: userData.profilePic ?? "")!)
+            if let imgData = self.selectedImageData, let uiImage = UIImage(data: imgData) {
+                self.selectedImage = uiImage
+            }
+            self.selectedDOB = DateFormatter.stringToDateFormatter.date(from: userData.dob ?? "") ?? Date.now
+            self.userId = userData.userId ?? ""
         }
     }
     
@@ -71,7 +78,7 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
     //        }
     //    }
     
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: Date) -> EditProfileValidator {
+    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String) -> EditProfileValidator {
         guard userName.isNotEmpty else {
             return .failure(.userName, StringConstants.LoginSignUp.userNameBlank)
         }
@@ -90,15 +97,14 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
         guard userMobile.isValidMobile else {
             return .failure(.userEmail, StringConstants.LoginSignUp.userMobileValid)
         }
-        let dob = DateFormatter.longDateFormatter.string(from: userDOB)
-        guard dob.isNotEmpty else {
+        guard userDOB.isNotEmpty else {
             return .failure(.userMobile, StringConstants.LoginSignUp.userDOBBlank)
         }
         return .success
     }
     
     func editProfile() {
-        let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: self.userDOB)
+        let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: DateFormatter.longDateFormatter.string(from: self.selectedDOB))
         switch response {
         case .success:
             self.showAlert = false
@@ -122,10 +128,11 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
                     "profilePic": self.userProfilePic,
                     "name": self.userName,
                     "email": self.userEmail,
-                    "dob": self.userDOB,
+                    "dob": DateFormatter.longDateFormatter.string(from: self.selectedDOB),
                     "gender": self.userGender,
                     "countryCode": self.userCountryCode,
-                    "mobile": self.userMobile
+                    "mobile": self.userMobile,
+                    "userId": self.userId
                 ]
                 
                 // Call the function to update user information

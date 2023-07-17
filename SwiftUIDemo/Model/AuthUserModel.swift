@@ -32,22 +32,24 @@ struct UpdatedUserData: Codable {
 }
 
 struct AuthUserData {
+    var id: UUID = UUID()
     var profilePic: String?
     var name: String?
     var email: String?
-    var dob: Date?
+    var dob: String?
     var gender: String?
     var countryCode: String?
     var mobile: String?
+    var userId: String?
     
-    init?(document: DocumentSnapshot) {
-        let data = document.data()
-        self.profilePic = data?["profilePic"] as? String
-        self.name = data?["name"] as? String
-        self.email = data?["email"] as? String
-        self.dob = data?["dob"] as? Date
-        self.gender = data?["gender"] as? String
-        self.countryCode = data?["countryCode"] as? String
-        self.mobile = data?["mobile"] as? String
-    }
+//    init?(document: DocumentSnapshot) {
+//        let data = document.data()
+//        self.profilePic = data?["profilePic"] as? String
+//        self.name = data?["name"] as? String
+//        self.email = data?["email"] as? String
+//        self.dob = data?["dob"] as? Date
+//        self.gender = data?["gender"] as? String
+//        self.countryCode = data?["countryCode"] as? String
+//        self.mobile = data?["mobile"] as? String
+//    }
 }

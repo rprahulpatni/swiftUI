@@ -14,16 +14,30 @@ import UIKit
 class UserViewModel: ObservableObject {
     @Published var user: AuthUserData?
     
+//    func fetchUser() {
+//        guard let uid = Auth.auth().currentUser?.uid else { return }
+//        let userRef = Firestore.firestore().collection("users").document(uid)
+//        userRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                if let user = AuthUserData(document: document) {
+//                    self.user = user
+//                }
+//            } else {
+//                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
+//            }
+//        }
+//    }
+    
     func fetchUser() {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let userRef = Firestore.firestore().collection("users").document(uid)
-        userRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                if let user = AuthUserData(document: document) {
-                    self.user = user
-                }
+        let usersRef = Database.database().reference().child("users")
+        usersRef.child(uid).observeSingleEvent(of: .value) { snapshot in
+            if let userInfo = snapshot.value as? [String: Any] {
+                // Access user information here
+                print("User Info: \(userInfo)")
+                self.user = AuthUserData(profilePic: userInfo["profilePic"] as? String ?? "", name:  userInfo["name"] as? String ?? "", email:  userInfo["email"] as? String ?? "", dob:  userInfo["dob"] as? String ?? "", gender:  userInfo["gender"] as? String ?? "", countryCode:  userInfo["countryCode"] as? String ?? "", mobile:  userInfo["mobile"] as? String ?? "", userId: userInfo["userId"] as? String ?? "")
             } else {
-                print("Document does not exist or there was an error: \(error?.localizedDescription ?? "")")
+                print("User information not found")
             }
         }
     }

@@ -15,6 +15,10 @@
 		0A03A8692A2E0E4800717A6E /* WalkThrough.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A03A8682A2E0E4800717A6E /* WalkThrough.swift */; };
 		0A03A86C2A2E1A8800717A6E /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A03A86B2A2E1A8800717A6E /* LoginView.swift */; };
 		0A03A86F2A2E1AA500717A6E /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A03A86E2A2E1AA500717A6E /* SignUpView.swift */; };
+		0A0E95BB2A65431E0046DC2F /* UsersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0E95BA2A65431E0046DC2F /* UsersView.swift */; };
+		0A0E95BE2A654D8E0046DC2F /* ListViewDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0E95BD2A654D8E0046DC2F /* ListViewDetails.swift */; };
+		0A0E95C02A654E110046DC2F /* CustomUserForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0E95BF2A654E110046DC2F /* CustomUserForm.swift */; };
+		0A0E95C22A655DEB0046DC2F /* CustomRatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0E95C12A655DEB0046DC2F /* CustomRatingView.swift */; };
 		0A3D39752A31B19200C5938D /* CustomProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D39742A31B19200C5938D /* CustomProgressView.swift */; };
 		0A3D39772A31D84E00C5938D /* UsersModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D39762A31D84E00C5938D /* UsersModel.swift */; };
 		0A3D39792A31D88100C5938D /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A3D39782A31D88100C5938D /* HomeViewModel.swift */; };
@@ -78,6 +82,10 @@
 		0A03A8682A2E0E4800717A6E /* WalkThrough.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkThrough.swift; sourceTree = "<group>"; };
 		0A03A86B2A2E1A8800717A6E /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		0A03A86E2A2E1AA500717A6E /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		0A0E95BA2A65431E0046DC2F /* UsersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersView.swift; sourceTree = "<group>"; };
+		0A0E95BD2A654D8E0046DC2F /* ListViewDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewDetails.swift; sourceTree = "<group>"; };
+		0A0E95BF2A654E110046DC2F /* CustomUserForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUserForm.swift; sourceTree = "<group>"; };
+		0A0E95C12A655DEB0046DC2F /* CustomRatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomRatingView.swift; sourceTree = "<group>"; };
 		0A3D39742A31B19200C5938D /* CustomProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomProgressView.swift; sourceTree = "<group>"; };
 		0A3D39762A31D84E00C5938D /* UsersModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UsersModel.swift; sourceTree = "<group>"; };
 		0A3D39782A31D88100C5938D /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
@@ -196,6 +204,14 @@
 			path = SignUpView;
 			sourceTree = "<group>";
 		};
+		0A0E95BC2A654D780046DC2F /* ListViewDetails */ = {
+			isa = PBXGroup;
+			children = (
+				0A0E95BD2A654D8E0046DC2F /* ListViewDetails.swift */,
+			);
+			path = ListViewDetails;
+			sourceTree = "<group>";
+		};
 		0A3D397E2A320EC600C5938D /* HomeViewDetails */ = {
 			isa = PBXGroup;
 			children = (
@@ -268,6 +284,8 @@
 				0A3D39742A31B19200C5938D /* CustomProgressView.swift */,
 				0ACA6E652A5D23B00061641E /* CustomPickerView.swift */,
 				0ACA6E692A5D62D50061641E /* CustomCountryPickerView.swift */,
+				0A0E95BF2A654E110046DC2F /* CustomUserForm.swift */,
+				0A0E95C12A655DEB0046DC2F /* CustomRatingView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -311,6 +329,7 @@
 		0A99C8282A2F219F0084B3D4 /* TabView */ = {
 			isa = PBXGroup;
 			children = (
+				0A0E95BC2A654D780046DC2F /* ListViewDetails */,
 				0A7820D02A601EFB004C84A5 /* ProfileViewDetails */,
 				0A3D397E2A320EC600C5938D /* HomeViewDetails */,
 				0AE97AA62A30DD4300723033 /* GridViewDetails */,
@@ -391,6 +410,7 @@
 				0A5A40AE2A30C2F700BBDF50 /* CategoryRow.swift */,
 				0A5A40B02A30C3A100BBDF50 /* CategoryItem.swift */,
 				0A3D397C2A31E18F00C5938D /* UsersListView.swift */,
+				0A0E95BA2A65431E0046DC2F /* UsersView.swift */,
 			);
 			path = CellsView;
 			sourceTree = "<group>";
@@ -580,6 +600,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A0E95C22A655DEB0046DC2F /* CustomRatingView.swift in Sources */,
 				0A5A40AB2A30C04D00BBDF50 /* LocalDataHelper.swift in Sources */,
 				0A3D397D2A31E18F00C5938D /* UsersListView.swift in Sources */,
 				0AB6F8302A309562004A40C6 /* RectangleShadowView.swift in Sources */,
@@ -601,8 +622,10 @@
 				0A99C82A2A2F21B10084B3D4 /* Home.swift in Sources */,
 				0ACA6E6A2A5D62D50061641E /* CustomCountryPickerView.swift in Sources */,
 				0A3D39792A31D88100C5938D /* HomeViewModel.swift in Sources */,
+				0A0E95C02A654E110046DC2F /* CustomUserForm.swift in Sources */,
 				0AE97AA82A30DD6200723033 /* GridViewDetails.swift in Sources */,
 				0ADDFFD92A2DC04C00B42C2D /* ContentView.swift in Sources */,
+				0A0E95BB2A65431E0046DC2F /* UsersView.swift in Sources */,
 				0A5A40AD2A30C06400BBDF50 /* LandmarkModel.swift in Sources */,
 				0A03A8692A2E0E4800717A6E /* WalkThrough.swift in Sources */,
 				0A03A8612A2DF15600717A6E /* OnboardingView.swift in Sources */,
@@ -620,6 +643,7 @@
 				0A99C8302A2F21FC0084B3D4 /* ListView.swift in Sources */,
 				0A03A86C2A2E1A8800717A6E /* LoginView.swift in Sources */,
 				0AE97AAE2A30E23800723033 /* CustomBackButton.swift in Sources */,
+				0A0E95BE2A654D8E0046DC2F /* ListViewDetails.swift in Sources */,
 				0A3D39772A31D84E00C5938D /* UsersModel.swift in Sources */,
 				0A5A409F2A30AD9A00BBDF50 /* PostsModel.swift in Sources */,
 				0A7820D22A601F26004C84A5 /* EditProfileView.swift in Sources */,

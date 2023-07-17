@@ -24,11 +24,11 @@ class SessionManager: NSObject, ObservableObject {
         //handle = auth.addStateDidChangeListener(authStateChanged)
     }
     
-//    private func authStateChanged(with auth: Auth, user: User?) {
-//        guard user != self.loggedUser else { return }
-//        self.loggedUser = user
-//    }
-        
+    //    private func authStateChanged(with auth: Auth, user: User?) {
+    //        guard user != self.loggedUser else { return }
+    //        self.loggedUser = user
+    //    }
+    
     func action_Login(_ email: String, _ password: String, compelition: @escaping(_ success: Bool, _ failure: String, _ userData: User?) -> Void) {
         auth.signIn(withEmail: email, password: password) { (result, error) in
             if error != nil {
@@ -72,28 +72,44 @@ class SessionManager: NSObject, ObservableObject {
 extension SessionManager {
     func addUserInformation(userData: [String: Any], completion: @escaping (Bool, String) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let userRef = Firestore.firestore().collection("users").document(uid)
         // Add the user document in Firestore with the additional information
-        userRef.setData(userData) { error in
+        let usersRef = Database.database().reference().child("users")
+        usersRef.child(uid).setValue(userData) { (error, reference) in
             if let err = error {
                 completion(false, err.localizedDescription)
             } else {
                 completion(true, "")
             }
         }
+        //        let userRef = Firestore.firestore().collection("users").document(uid)
+        //        userRef.setData(userData) { error in
+        //            if let err = error {
+        //                completion(false, err.localizedDescription)
+        //            } else {
+        //                completion(true, "")
+        //            }
+        //        }
     }
     
     func updateUserInformation(userData: [String: Any], completion: @escaping (Bool, String) -> Void) {
         guard let uid = Auth.auth().currentUser?.uid else { return }
-        let userRef = Firestore.firestore().collection("users").document(uid)
-        //Update the user document in Firestore with the additional information
-        userRef.updateData(userData) { error in
+        let usersRef = Database.database().reference().child("users")
+        usersRef.child(uid).updateChildValues(userData) { (error, reference) in
             if let err = error {
                 completion(false, err.localizedDescription)
             } else {
                 completion(true, "")
             }
         }
+//        let userRef = Firestore.firestore().collection("users").document(uid)
+//        //Update the user document in Firestore with the additional information
+//        userRef.updateData(userData) { error in
+//            if let err = error {
+//                completion(false, err.localizedDescription)
+//            } else {
+//                completion(true, "")
+//            }
+//        }
     }
     
     func uploadImageToFirebaseStorage(image: UIImage?, completion: @escaping (_ success: String, _ failure: String) -> Void) {

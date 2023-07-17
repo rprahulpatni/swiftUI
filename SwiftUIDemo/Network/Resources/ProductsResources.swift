@@ -10,11 +10,7 @@ import Foundation
 struct ProductsResources {
         
     func getProductList(completion: @escaping (Result<[ProductsModel]>) -> Void) {
-
-        APIHelper.shared.callAPI(for: [ProductsModel].self,
-                                 urlString: URLEndpoint.getProductsList,
-                                  method: .get,
-                                  completion: completion)
+        APIHelper.shared.callAPI(for: [ProductsModel].self, urlString: URLEndpoint.getProductsList, method: .get, completion: completion)
 //        APIHelper.shared.callAPI(for: [ProductsModel].self, urlString: URLEndpoint.getProductsList, method: .get, completion: { result in
 //            switch result {
 //            case .success(let products):

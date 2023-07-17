@@ -21,7 +21,6 @@ struct EditProfileView: View {
     }
     
     @State private var selectedItem: PhotosPickerItem? = nil
-//    @State private var selectedImageData: Data? = nil
     @State private var isPickerVisible = false
     @State private var isMenuOpen = false
     @StateObject private var viewModel: EditProfileViewModel
@@ -94,7 +93,7 @@ struct EditProfileView: View {
                                 .textFieldStyle(CustomTxtFieldStyle())
                         }
                         .padding(.bottom, 5)
-                        DatePicker("Select DOB", selection: $viewModel.userDOB, in: dateClosedRange, displayedComponents: .date)
+                        DatePicker("Select DOB", selection: $viewModel.selectedDOB, in: dateClosedRange, displayedComponents: .date)
                             .padding(.all, 10)
                             .background(CustomGraditantView())
                             .padding(.bottom, 5)
@@ -163,9 +162,7 @@ struct EditProfileView: View {
                     })
                 }
             }
-        }.onAppear(perform: {
-            //self.viewModel.fetchUser()
-        })
+        }
     }
 }
 

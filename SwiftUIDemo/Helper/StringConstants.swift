@@ -73,5 +73,13 @@ extension DateFormatter {
         formatter.dateStyle = .long
         return formatter
     }
+    
+    static var stringToDateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .long
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateFormat = "yyyy/MM/dd HH:mm"
+        return formatter
+    }
 }
 

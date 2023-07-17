@@ -13,23 +13,36 @@ struct ProductsListCell: View {
     var products: ProductsModel
     
     var body: some View {
-        HStack(alignment: .center){
-            let imgUrl = URL(string: products.image)
-            WebImage(url: imgUrl)
-                .resizable()
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 50, height: 50)
-                .clipShape(Circle())
-                .cornerRadius(25)
-                .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                .shadow(radius: 5)
-                .padding(5)
-            Text(products.title)
-                .font(.title2)
-                .lineLimit(2)
+        VStack(alignment: .center){
+            VStack(){
+                let imgUrl = URL(string: products.image)
+                WebImage(url: imgUrl)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(minWidth: 0, maxWidth: .infinity, maxHeight: 200, alignment: .center)
+                    .padding(5)
+                VStack(alignment: .leading, spacing: 10){
+                    HStack(alignment: .center){
+                        Text("Price : $ " + String(format: "%0.1f", products.price))
+                            .font(.headline)
+                            .lineLimit(2)
+                        Spacer()
+                        CustomRatingView(rating: products.rating.rate)
+                    }
+                    Text(products.title)
+                        .font(.headline)
+                        .lineLimit(2)
+                    Text(products.description)
+                        .font(.caption)
+                }
+            }.padding(.all, 15)
         }
-            .listRowSeparator(.hidden)
-            //.listRowBackground(RectangleShadowView())
+        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+        .background(.white)
+        .cornerRadius(10)
+        .shadow(radius: 5)
+        .padding(EdgeInsets(top: 5, leading: 10, bottom: 5, trailing: 10))
+        .listRowSeparator(.hidden)
     }
 }
 

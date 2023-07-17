@@ -27,7 +27,7 @@ struct SignUpView: View {
     }
     
     @State private var selectedItem: PhotosPickerItem? = nil
-    @State private var selectedImageData: Data? = nil
+//    @State private var selectedImageData: Data? = nil
     
     @State private var isPickerVisible = false
     @State private var isMenuOpen = false
@@ -41,39 +41,81 @@ struct SignUpView: View {
         NavigationStack{
             ScrollView(showsIndicators: false) {
                 VStack {
-                    if let selectedImageData,
-                       let uiImage = UIImage(data: selectedImageData) {
-                        Image(uiImage: uiImage)
-                            .resizable()
-                            .clipShape(Circle())
-                            .frame(width: 150, height: 150)
-                            .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                            .shadow(radius: 5)
-                            .padding(.bottom, 10)
-                    } else {
-                        Image(systemName: "person.circle.fill")
-                            .resizable()
-                            .aspectRatio(contentMode: .fit)
-                            .frame(width: 150, height: 150)
-                    }
-                    
-                    PhotosPicker(
-                        selection: $selectedItem,
-                        matching: .images,
-                        photoLibrary: .shared()) {
-                            Text("Select a profile photo")
-                        }.padding(.bottom, 20)
-                        .onChange(of: selectedItem) { newItem in
-                            Task {
-                                // Retrieve selected asset in the form of Data
-                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                                    selectedImageData = data
-                                    if let selectedImageData, let uiImage = UIImage(data: selectedImageData) {
-                                        self.viewModel.selectedImage = uiImage
+                    //                    if let selectedImageData,
+                    //                       let uiImage = UIImage(data: selectedImageData) {
+                    //                        Image(uiImage: uiImage)
+                    //                            .resizable()
+                    //                            .clipShape(Circle())
+                    //                            .frame(width: 150, height: 150)
+                    //                            .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                    //                            .shadow(radius: 5)
+                    //                            .padding(.bottom, 10)
+                    //                    } else {
+                    //                        Image(systemName: "person.circle.fill")
+                    //                            .resizable()
+                    //                            .aspectRatio(contentMode: .fit)
+                    //                            .frame(width: 150, height: 150)
+                    //                    }
+                    //
+                    //                    PhotosPicker(
+                    //                        selection: $selectedItem,
+                    //                        matching: .images,
+                    //                        photoLibrary: .shared()) {
+                    //                            Text("Select a profile photo")
+                    //                        }.padding(.bottom, 20)
+                    //                        .onChange(of: selectedItem) { newItem in
+                    //                            Task {
+                    //                                // Retrieve selected asset in the form of Data
+                    //                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                    //                                    selectedImageData = data
+                    //                                    if let selectedImageData, let uiImage = UIImage(data: selectedImageData) {
+                    //                                        self.viewModel.selectedImage = uiImage
+                    //                                    }
+                    //                                }
+                    //                            }
+                    //                        }
+                    ZStack {
+                        if let imgData = self.viewModel.selectedImageData, let uiImage = UIImage(data: imgData) {
+                            Image(uiImage: uiImage)
+                                .resizable()
+                                .clipShape(Circle())
+                                .frame(width: 150, height: 150)
+                                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                .shadow(radius: 5)
+                        } else {
+                            Image(systemName: "person.circle.fill")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .clipShape(Circle())
+                                .frame(width: 150, height: 150)
+                                .overlay(Circle().stroke(Color.white, lineWidth: 2))
+                                .shadow(radius: 5)
+                        }
+                        PhotosPicker(
+                            selection: $selectedItem,
+                            matching: .images,
+                            photoLibrary: .shared()) {
+                                Image(systemName: "camera")
+                                    .foregroundColor(.white)
+                                    .padding(10)
+                                    .font(.system(size: 20))
+                                    .background(Color.blue)
+                                    .clipShape(Circle())
+                                    .offset(x: 60)
+                                    .padding(.top, 120)
+                            }.padding(.bottom, 20)
+                            .onChange(of: selectedItem) { newItem in
+                                Task {
+                                    // Retrieve selected asset in the form of Data
+                                    if let data = try? await newItem?.loadTransferable(type: Data.self) {
+                                        self.viewModel.selectedImageData = data
+                                        if let imgData = self.viewModel.selectedImageData, let uiImage = UIImage(data: imgData) {
+                                            self.viewModel.selectedImage = uiImage
+                                        }
                                     }
                                 }
                             }
-                        }
+                    }
                     TextField("Name", text: $viewModel.userName)
                         .keyboardType(.emailAddress)
                         .textFieldStyle(CustomTxtFieldStyle())
@@ -101,7 +143,7 @@ struct SignUpView: View {
                             .textFieldStyle(CustomTxtFieldStyle())
                     }
                     .padding(.bottom, 5)
-                    DatePicker("Select DOB", selection: $viewModel.userDOB, in: dateClosedRange, displayedComponents: .date)
+                    DatePicker("Select DOB", selection: $viewModel.selectedDOB, in: dateClosedRange, displayedComponents: .date)
                         .padding(.all, 10)
                         .background(CustomGraditantView())
                         .padding(.bottom, 5)

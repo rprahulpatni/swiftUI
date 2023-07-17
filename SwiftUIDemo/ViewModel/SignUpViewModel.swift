@@ -12,7 +12,7 @@ import FirebaseFirestore
 import UIKit
 
 protocol iSignUpViewModel {
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: Date, password: String, confirmPassword: String)-> SignUpValidator
+    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String, password: String, confirmPassword: String)-> SignUpValidator
 }
 
 class SignUpViewModel: iSignUpViewModel, ObservableObject {
@@ -22,11 +22,14 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
     @Published var userCountryCode = ""
     @Published var userMobile = ""
     @Published var userGender = ""
-    @Published var userDOB = Date.now
+    @Published var userDOB = ""
     @Published var userPassword = ""
     @Published var userConfirmPassword = ""
+    @Published var userId = ""
+    @Published var selectedDOB : Date = Date.now
     @Published var selectedImage : UIImage? = nil
-    
+    @Published var selectedImageData : Data? = nil
+
     @Published var errorMessage = ""
     @Published var showAlert = false
     @Published var isLoggedIn = false
@@ -38,7 +41,7 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
         self.sessionManager = iSessionManager
     }
     
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: Date, password: String, confirmPassword: String) -> SignUpValidator {
+    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String, password: String, confirmPassword: String) -> SignUpValidator {
         guard userName.isNotEmpty else {
             return .failure(.userName, StringConstants.LoginSignUp.userNameBlank)
         }
@@ -57,8 +60,8 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
         guard userMobile.isValidMobile else {
             return .failure(.userEmail, StringConstants.LoginSignUp.userMobileValid)
         }
-        let dob = DateFormatter.longDateFormatter.string(from: userDOB)
-        guard dob.isNotEmpty else {
+//        let dob = DateFormatter.longDateFormatter.string(from: userDOB)
+        guard userDOB.isNotEmpty else {
             return .failure(.userMobile, StringConstants.LoginSignUp.userDOBBlank)
         }
         guard password.isNotEmpty else {
@@ -74,7 +77,7 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
     }
     
     func signUp() {
-        let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: self.userDOB, password: self.userPassword, confirmPassword: self.userConfirmPassword)
+        let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: DateFormatter.longDateFormatter.string(from: self.selectedDOB), password: self.userPassword, confirmPassword: self.userConfirmPassword)
         switch response {
         case .success:
             sessionManager?.action_Signup(self.userEmail, self.userPassword) { [weak self] (success, error, result) in
@@ -103,14 +106,16 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
                 self.showAlert = true
             } else {
                 self.userProfilePic = imageUrl
+                self.userId = self.loggedInUser?.uid ?? ""
                 let updatedData: [String: Any] = [
                     "profilePic": self.userProfilePic,
                     "name": self.userName,
                     "email": self.userEmail,
-                    "dob": self.userDOB,
+                    "dob": DateFormatter.longDateFormatter.string(from: self.selectedDOB),
                     "gender": self.userGender,
                     "countryCode": self.userCountryCode,
-                    "mobile": self.userMobile
+                    "mobile": self.userMobile,
+                    "userId": self.userId
                 ]
                 
                 // Call the function to update user information
@@ -128,32 +133,5 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
         }
     }
 }
-
-//extension SignUpViewModel {
-//    func addUserInformation(completion: @escaping (Bool, String) -> Void) {
-//        guard let uid = Auth.auth().currentUser?.uid else { return }
-//        let userRef = Firestore.firestore().collection("users").document(uid)
-//        let updatedData: [String: Any] = [
-//            "profilePic": self.userProfilePic,
-//            "name": self.userName,
-//            "email": self.userEmail,
-//            "dob": self.userDOB,
-//            "gender": self.userGender,
-//            "countryCode": self.userCountryCode,
-//            "mobile": self.userMobile
-//        ]
-//        // Update the user document in Firestore with the additional information
-//        userRef.setData(updatedData) { error in
-//            if let err = error {
-//                completion(false, err.localizedDescription)
-//            } else {
-//                completion(true, "")
-//            }
-//        }
-//    }
-//}
-
-///////
-///
 
 

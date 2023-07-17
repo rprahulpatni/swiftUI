@@ -11,19 +11,32 @@ struct Search: View {
     @ObservedObject var searchVM: SearchViewModel = SearchViewModel()
     
     var body: some View {
-        NavigationStack{
-            ZStack {
-                VStack{
-                    List(searchVM.filteredPost, id: \.id) { posts in
-                        Text(posts.title)
-                    }.onAppear(perform: {
-                        searchVM.getPostList()
+        NavigationStack {
+                VStack {
+                    List(searchVM.filteredPost, id: \.id) { products in
+                        ProductsListCell(products: products)
+                            .background(.clear)
+                    }.padding(.all, -10)
+                }.listStyle(.plain)
+                    .onAppear(perform: {
+                        searchVM.getProductsList()
                     })
-                    //CustomProgressView(showProgressBar: searchVM.isShowProgress)
-                }.navigationBarTitle("POST LIST", displayMode: .inline)
+                    .navigationBarTitle("PRODUCTS", displayMode: .inline)
                     .searchable(text: $searchVM.searchText)
-            }
         }
+        //        NavigationStack{
+        //            ZStack {
+        //                VStack{
+        //                    List(searchVM.filteredPost, id: \.id) { posts in
+        //                        Text(posts.title)
+        //                    }.onAppear(perform: {
+        //                        searchVM.getPostList()
+        //                    })
+        //                    //CustomProgressView(showProgressBar: searchVM.isShowProgress)
+        //                }.navigationBarTitle("POST LIST", displayMode: .inline)
+        //                    .searchable(text: $searchVM.searchText)
+        //            }
+        //        }
     }
 }
 

@@ -12,7 +12,6 @@ struct UsersListView: View {
     var usersData : UsersData
     
     var body: some View {
-        
         HStack(alignment: .center) {
             HStack{
                 let imgUrl = URL(string: usersData.image)

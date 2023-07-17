@@ -8,19 +8,27 @@
 import SwiftUI
 
 struct ListView: View {
-    @ObservedObject var homeVM : ListViewModel = ListViewModel()
+    @ObservedObject var listVM : ListViewModel = ListViewModel()
+    @State private var gridVLayout : [GridItem] = [GridItem()]
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                List(homeVM.arrProducts, id: \.id) { products in
-                    ProductsListCell(products: products)
+        NavigationStack{
+            VStack{
+                ScrollView(.vertical, showsIndicators: false) {
+                    LazyVGrid(columns: gridVLayout) {
+                        ForEach(listVM.arrUsers, id: \.id) { userData in
+                            NavigationLink(destination: {
+                                ListViewDetails(userData: userData)
+                            }, label: {
+                                UsersView(usersData: userData)
+                            })
+                        }
+                    }.padding(.all, 10)
                 }
-            }.listStyle(.plain)
                 .onAppear(perform: {
-                    homeVM.getProductsList()
+                    listVM.fetchUsersList()
                 })
-                .navigationBarTitle("PRODUCTS", displayMode: .inline)
+            }.navigationBarTitle("USER'S LIST",displayMode: .inline)
         }
     }
 }
