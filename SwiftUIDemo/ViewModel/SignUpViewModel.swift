@@ -33,7 +33,8 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
     @Published var errorMessage = ""
     @Published var showAlert = false
     @Published var isLoggedIn = false
-    
+    @Published var isLoading: Bool = false
+
     let sessionManager: SessionManager?
     var loggedInUser : User?
     
@@ -77,6 +78,7 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
     }
     
     func signUp() {
+        self.isLoading = true
         let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: DateFormatter.longDateFormatter.string(from: self.selectedDOB), password: self.userPassword, confirmPassword: self.userConfirmPassword)
         switch response {
         case .success:
@@ -89,12 +91,14 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
                 } else {
                     self.loggedInUser = result
                     self.showAlert = false
+                    self.isLoading = false
                     self.uploadUserProfile()
                 }
             }
         case .failure(let type, let msg):
             print(type, msg)
             self.showAlert = true
+            self.isLoading = false
             self.errorMessage = msg
         }
     }
@@ -104,6 +108,7 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
             if failure.isNotEmpty {
                 self.errorMessage = failure
                 self.showAlert = true
+                self.isLoading = false
             } else {
                 self.userProfilePic = imageUrl
                 self.userId = self.loggedInUser?.uid ?? ""
@@ -124,9 +129,11 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
                     if err.isNotEmpty {
                         self.errorMessage = err
                         self.showAlert = true
+                        self.isLoading = false
                     } else {
                         self.isLoggedIn = true
                         self.showAlert = true
+                        self.isLoading = false
                     }
                 }
             }

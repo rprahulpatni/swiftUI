@@ -38,7 +38,7 @@ struct CustomCountryPickerView: View {
                     }
                 })
             }.listStyle(.plain)
-        }
+        }.modifier(CustomHideKeyboardModifier())
     }
 }
 
@@ -59,6 +59,8 @@ struct SearchBar: View {
             TextField("Search", text: $text)
                 .padding(.vertical, 5)
                 .frame(height: 40)
+                .disableAutocorrection(true)
+                .autocapitalization(.none)
         }
         .padding(.all, 5)
         .background(Color(.systemGray6))

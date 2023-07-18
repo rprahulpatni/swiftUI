@@ -144,24 +144,12 @@ struct EditProfileView: View {
                             }
                     }
                     .modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
+                    .modifier(CustomHideKeyboardModifier())
                     .toolbar(.hidden, for: .tabBar)
                     .padding()
                     .navigationBarTitle("EDIT PROFILE", displayMode: .inline)
                     .navigationBarBackButtonHidden()
                     .navigationBarItems(leading: CustomBackButton())}
-                .onTapGesture {
-                    hideKeyboard()
-                }
-                .toolbar {
-                    ToolbarItemGroup(placement: .keyboard, content: {
-                        Spacer()
-                        Button(action: {
-                            hideKeyboard()
-                        }, label: {
-                            Text("Done").foregroundColor(.blue)
-                        })
-                    })
-                }
             }
         }
     }

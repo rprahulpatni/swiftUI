@@ -13,25 +13,30 @@ struct CustomLoaderModifier: ViewModifier {
         ZStack {
             content
             if isLoading {
+                // Blur view
+                VisualEffectView(effect: UIBlurEffect(style: .dark))
+                    .edgesIgnoringSafeArea(.all)
                 CustomProgressView(showProgressBar: isLoading)
-//                ProgressView()
-//                    .progressViewStyle(CircularProgressViewStyle())
-//                    .scaleEffect(2)
-//                    .foregroundColor(.white)
-//                    .background(Color.black.opacity(0.4))
-//                    .edgesIgnoringSafeArea(.all)
             }
         }
     }
 }
-//struct CustomLoaderModifier_Previews: PreviewProvider {
-//    static var previews: some View {
-//        CustomLoaderModifier(isLoading: .constant(false))
-//    }
-//}
 
 extension View {
     func loader(isLoading: Binding<Bool>) -> some View {
         self.modifier(CustomLoaderModifier(isLoading: isLoading))
+    }
+}
+
+// Helper view for applying the blur effect
+struct VisualEffectView: UIViewRepresentable {
+    var effect: UIVisualEffect?
+    
+    func makeUIView(context: Context) -> UIVisualEffectView {
+        UIVisualEffectView()
+    }
+    
+    func updateUIView(_ uiView: UIVisualEffectView, context: Context) {
+        uiView.effect = effect
     }
 }

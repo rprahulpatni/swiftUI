@@ -25,8 +25,10 @@ class HomeViewModel: ObservableObject {
 //        }
 //    }
 //
-    func getUsersList() {
-        self.isLoading = true
+    func getUsersList(_ showLoader: Bool) {
+        if showLoader {
+            self.isLoading = true
+        }
         resources.getUsersList(limit, skip) { [weak self] result in
             switch result {
             case .success(let usersData):

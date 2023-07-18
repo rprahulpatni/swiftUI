@@ -32,7 +32,7 @@ struct LoginView: View {
                         Button(action: {
                             viewModel.login()
                         }, label: {
-                            Text("Sign in")
+                            Text("Sign In")
                         }).buttonStyle(CustomBtn())
                             .alert(isPresented: $viewModel.showAlert) {
                                 if  viewModel.isLoggedIn {
@@ -49,11 +49,10 @@ struct LoginView: View {
                     .navigationBarTitle("LOGIN", displayMode: .inline)
                     .navigationBarBackButtonHidden()
                     .navigationBarItems(leading: CustomBackButton())
-//                    .navigationDestination(isPresented: $shouldNavigate) {
-//                        ContentView()
-//                    }
                 }
             }
+            .modifier(CustomLoaderModifier(isLoading: $viewModel.isLoading))
+            .modifier(CustomHideKeyboardModifier())
         }
     }
 }

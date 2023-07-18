@@ -31,14 +31,14 @@ struct Home: View {
                                     }).progressViewStyle(.circular)
                                         .tint(.red)
                                         .onAppear(perform: {
-                                            homeVM.getUsersList()
+                                            homeVM.getUsersList(false)
                                         })
                                 }
                             }
                         }
                     }.padding(.all, 10)
                 }.onAppear(perform: {
-                    homeVM.getUsersList()
+                    homeVM.getUsersList(true)
                 })
                 .modifier(CustomLoaderModifier(isLoading: self.$homeVM.isLoading))
             }.navigationBarTitle("HOME",displayMode: .inline)

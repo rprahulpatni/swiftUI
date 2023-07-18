@@ -41,39 +41,6 @@ struct SignUpView: View {
         NavigationStack{
             ScrollView(showsIndicators: false) {
                 VStack {
-                    //                    if let selectedImageData,
-                    //                       let uiImage = UIImage(data: selectedImageData) {
-                    //                        Image(uiImage: uiImage)
-                    //                            .resizable()
-                    //                            .clipShape(Circle())
-                    //                            .frame(width: 150, height: 150)
-                    //                            .overlay(Circle().stroke(Color.white, lineWidth: 2))
-                    //                            .shadow(radius: 5)
-                    //                            .padding(.bottom, 10)
-                    //                    } else {
-                    //                        Image(systemName: "person.circle.fill")
-                    //                            .resizable()
-                    //                            .aspectRatio(contentMode: .fit)
-                    //                            .frame(width: 150, height: 150)
-                    //                    }
-                    //
-                    //                    PhotosPicker(
-                    //                        selection: $selectedItem,
-                    //                        matching: .images,
-                    //                        photoLibrary: .shared()) {
-                    //                            Text("Select a profile photo")
-                    //                        }.padding(.bottom, 20)
-                    //                        .onChange(of: selectedItem) { newItem in
-                    //                            Task {
-                    //                                // Retrieve selected asset in the form of Data
-                    //                                if let data = try? await newItem?.loadTransferable(type: Data.self) {
-                    //                                    selectedImageData = data
-                    //                                    if let selectedImageData, let uiImage = UIImage(data: selectedImageData) {
-                    //                                        self.viewModel.selectedImage = uiImage
-                    //                                    }
-                    //                                }
-                    //                            }
-                    //                        }
                     ZStack {
                         if let imgData = self.viewModel.selectedImageData, let uiImage = UIImage(data: imgData) {
                             Image(uiImage: uiImage)
@@ -202,20 +169,10 @@ struct SignUpView: View {
                 .padding()
                 .navigationBarTitle("SIGNUP", displayMode: .inline)
                 .navigationBarBackButtonHidden()
-                .navigationBarItems(leading: CustomBackButton())}
-            .onTapGesture {
-                hideKeyboard()
+                .navigationBarItems(leading: CustomBackButton())
             }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard, content: {
-                    Spacer()
-                    Button(action: {
-                        hideKeyboard()
-                    }, label: {
-                        Text("Done").foregroundColor(.blue)
-                    })
-                })
-            }
+            .modifier(CustomLoaderModifier(isLoading: $viewModel.isLoading))
+            .modifier(CustomHideKeyboardModifier())
         }
     }
 }

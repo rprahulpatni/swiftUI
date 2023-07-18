@@ -18,6 +18,7 @@ class LoginViewModel: iLoginViewModel, ObservableObject {
     @Published var errorMessage = ""
     @Published var isLoggedIn = false
     @Published var showAlert = false
+    @Published var isLoading: Bool = false
     let sessionManager: SessionManager?
     var loggedInUser : User?
 
@@ -39,6 +40,7 @@ class LoginViewModel: iLoginViewModel, ObservableObject {
     }
     
     func login() {
+        self.isLoading = true
         let response = self.validateUser(userEmail: self.email, password: self.password)
         switch response {
         case .success:
@@ -48,10 +50,12 @@ class LoginViewModel: iLoginViewModel, ObservableObject {
                 if err.isNotEmpty {
                     self.errorMessage = err
                     self.showAlert = true
+                    self.isLoading = false
                 } else {
                     self.loggedInUser = result
                     self.showAlert = true
                     self.isLoggedIn = true
+                    self.isLoading = false
                 }
             }
             
@@ -59,6 +63,7 @@ class LoginViewModel: iLoginViewModel, ObservableObject {
             print(type, msg)
             self.errorMessage = msg
             self.showAlert = true
+            self.isLoading = false
         }
     }
 }
