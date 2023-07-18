@@ -10,6 +10,8 @@ import Firebase
 import FirebaseStorage
 import FirebaseFirestore
 import UIKit
+import PhotosUI
+import SwiftUI
 
 protocol iSignUpViewModel {
     func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String, password: String, confirmPassword: String)-> SignUpValidator
@@ -29,6 +31,7 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
     @Published var selectedDOB : Date = Date.now
     @Published var selectedImage : UIImage? = nil
     @Published var selectedImageData : Data? = nil
+    @Published var selectedItem: PhotosPickerItem? = nil
 
     @Published var errorMessage = ""
     @Published var showAlert = false

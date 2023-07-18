@@ -10,6 +10,8 @@ import Firebase
 import FirebaseStorage
 import FirebaseFirestore
 import UIKit
+import SwiftUI
+import PhotosUI
 
 protocol iEditProfileViewModel {
     func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String)-> EditProfileValidator
@@ -29,7 +31,8 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
     @Published var selectedDOB : Date = Date.now
     @Published var selectedImage : UIImage? = nil
     @Published var selectedImageData : Data? = nil
-    
+    @Published var selectedItem: PhotosPickerItem? = nil
+
     @Published var errorMessage = ""
     @Published var showAlert = false
     @Published var isProfileUpdated = false

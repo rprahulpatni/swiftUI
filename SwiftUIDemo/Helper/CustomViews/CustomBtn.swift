@@ -20,3 +20,14 @@ struct CustomBtn: ButtonStyle {
             .foregroundColor(.white)
     }
 }
+
+struct CustomGradientBtn: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        ZStack{
+            CustomGraditantView()
+            configuration.label
+                .padding()
+                .frame(maxWidth: .infinity)
+        }
+    }
+}

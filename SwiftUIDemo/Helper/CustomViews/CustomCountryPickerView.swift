@@ -29,6 +29,7 @@ struct CustomCountryPickerView: View {
                 Button(action: {
                     selectedCountryCode = item.dial_code ?? ""
                     isCountryPickerVisible = false
+                    hideKeyboard()
                 }, label: {
                     HStack {
                         Text(item.flag!)
@@ -38,7 +39,7 @@ struct CustomCountryPickerView: View {
                     }
                 })
             }.listStyle(.plain)
-        }.modifier(CustomHideKeyboardModifier())
+        }//.modifier(CustomHideKeyboardModifier())
     }
 }
 

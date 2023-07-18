@@ -59,6 +59,8 @@
 		0AB6F8292A309138004A40C6 /* ListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6F8282A309138004A40C6 /* ListViewModel.swift */; };
 		0AB6F82E2A3094B8004A40C6 /* ProductsListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6F82D2A3094B8004A40C6 /* ProductsListCell.swift */; };
 		0AB6F8302A309562004A40C6 /* RectangleShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AB6F82F2A309562004A40C6 /* RectangleShadowView.swift */; };
+		0ABFE1A92A66917600F3A74C /* CustomCircularProfilePicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFE1A82A66917600F3A74C /* CustomCircularProfilePicture.swift */; };
+		0ABFE1AB2A66A2B900F3A74C /* CustomDatePickerModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ABFE1AA2A66A2B900F3A74C /* CustomDatePickerModifier.swift */; };
 		0ACA6E662A5D23B00061641E /* CustomPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA6E652A5D23B00061641E /* CustomPickerView.swift */; };
 		0ACA6E682A5D44EA0061641E /* CountryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA6E672A5D44EA0061641E /* CountryModel.swift */; };
 		0ACA6E6A2A5D62D50061641E /* CustomCountryPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA6E692A5D62D50061641E /* CustomCountryPickerView.swift */; };
@@ -128,6 +130,8 @@
 		0AB6F8282A309138004A40C6 /* ListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewModel.swift; sourceTree = "<group>"; };
 		0AB6F82D2A3094B8004A40C6 /* ProductsListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductsListCell.swift; sourceTree = "<group>"; };
 		0AB6F82F2A309562004A40C6 /* RectangleShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleShadowView.swift; sourceTree = "<group>"; };
+		0ABFE1A82A66917600F3A74C /* CustomCircularProfilePicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCircularProfilePicture.swift; sourceTree = "<group>"; };
+		0ABFE1AA2A66A2B900F3A74C /* CustomDatePickerModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePickerModifier.swift; sourceTree = "<group>"; };
 		0ACA6E652A5D23B00061641E /* CustomPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomPickerView.swift; sourceTree = "<group>"; };
 		0ACA6E672A5D44EA0061641E /* CountryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryModel.swift; sourceTree = "<group>"; };
 		0ACA6E692A5D62D50061641E /* CustomCountryPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCountryPickerView.swift; sourceTree = "<group>"; };
@@ -291,6 +295,7 @@
 				0ACA6E692A5D62D50061641E /* CustomCountryPickerView.swift */,
 				0A0E95BF2A654E110046DC2F /* CustomUserForm.swift */,
 				0A0E95C12A655DEB0046DC2F /* CustomRatingView.swift */,
+				0ABFE1A82A66917600F3A74C /* CustomCircularProfilePicture.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 			children = (
 				0A95A7482A65718B00C700A9 /* CustomLoaderModifier.swift */,
 				0AB4C6B42A665E9A004DAC92 /* CustomHideKeyboardModifier.swift */,
+				0ABFE1AA2A66A2B900F3A74C /* CustomDatePickerModifier.swift */,
 			);
 			path = CustomModifiers;
 			sourceTree = "<group>";
@@ -632,12 +638,14 @@
 				0A03A8672A2E0E3100717A6E /* WalkThroughView.swift in Sources */,
 				0A3D39802A320EDD00C5938D /* HomeViewDetails.swift in Sources */,
 				0A5B85042A5C08C70094E8AC /* StringConstants.swift in Sources */,
+				0ABFE1A92A66917600F3A74C /* CustomCircularProfilePicture.swift in Sources */,
 				0AE97AAC2A30E0C700723033 /* CircleImage.swift in Sources */,
 				0ACA6E6C2A5D78EB0061641E /* CustomTxtField.swift in Sources */,
 				0A99C82A2A2F21B10084B3D4 /* Home.swift in Sources */,
 				0ACA6E6A2A5D62D50061641E /* CustomCountryPickerView.swift in Sources */,
 				0A3D39792A31D88100C5938D /* HomeViewModel.swift in Sources */,
 				0A0E95C02A654E110046DC2F /* CustomUserForm.swift in Sources */,
+				0ABFE1AB2A66A2B900F3A74C /* CustomDatePickerModifier.swift in Sources */,
 				0AE97AA82A30DD6200723033 /* GridViewDetails.swift in Sources */,
 				0ADDFFD92A2DC04C00B42C2D /* ContentView.swift in Sources */,
 				0A0E95BB2A65431E0046DC2F /* UsersView.swift in Sources */,

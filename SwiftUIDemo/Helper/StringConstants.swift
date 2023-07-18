@@ -83,3 +83,26 @@ extension DateFormatter {
     }
 }
 
+extension UIImage {
+    func aspectFittedToHeight(imageSize : CGSize) -> UIImage {
+        let renderer = UIGraphicsImageRenderer(size: imageSize)
+        return renderer.image { _ in
+            self.draw(in: CGRect(origin: .zero, size: imageSize))
+        }
+    }
+    
+    func compressedImage(imageSize : CGSize) -> UIImage {
+        let resizedImage = self.aspectFittedToHeight(imageSize: imageSize)
+        resizedImage.jpegData(compressionQuality: 0.2)
+        return resizedImage
+    }
+    
+    func compressImageAndConvertToBase64(imageSize : CGSize) -> String? {
+        let resizedImage = self.aspectFittedToHeight(imageSize: imageSize)
+        if let imageData = resizedImage.jpegData(compressionQuality: 0.2) {
+            let base64String = imageData.base64EncodedString(options: [])
+            return base64String
+        }
+        return nil
+    }
+}

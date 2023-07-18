@@ -14,7 +14,7 @@ struct CustomLoaderModifier: ViewModifier {
             content
             if isLoading {
                 // Blur view
-                VisualEffectView(effect: UIBlurEffect(style: .dark))
+                VisualEffectView(effect: UIBlurEffect(style: .regular))
                     .edgesIgnoringSafeArea(.all)
                 CustomProgressView(showProgressBar: isLoading)
             }
