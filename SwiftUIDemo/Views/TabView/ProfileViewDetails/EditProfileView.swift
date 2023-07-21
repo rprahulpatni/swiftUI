@@ -102,7 +102,7 @@ struct EditProfileView: View {
                                 }
                             }
                     }
-                    .modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
+//                    .modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
                     .modifier(CustomHideKeyboardModifier())
                     .toolbar(.hidden, for: .tabBar)
                     .padding()
@@ -110,6 +110,9 @@ struct EditProfileView: View {
                     .navigationBarBackButtonHidden()
                     .navigationBarItems(leading: CustomBackButton())}
             }
+        }
+        .overlay{
+            LoadingView(showProgress: $viewModel.isLoading)
         }
     }
 }

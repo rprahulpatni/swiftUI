@@ -21,7 +21,7 @@ struct Profile: View {
                     .onAppear(perform: {
                         viewModel.fetchUser()
                     })
-                    .modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
+                    //.modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
             }.navigationBarTitle("PROFILE", displayMode: .inline)
                 .toolbar {
                     NavigationLink(destination: EditProfileView(viewModel: EditProfileViewModel(iSessionManager: self.sessionManager, iUserData: self.viewModel.user))) {
@@ -40,6 +40,9 @@ struct Profile: View {
                         }))
                     }
                 }
+        }
+        .overlay{
+            LoadingView(showProgress: $viewModel.isLoading)
         }
     }
 }

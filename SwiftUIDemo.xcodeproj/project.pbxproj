@@ -44,6 +44,8 @@
 		0A7820D42A601FA1004C84A5 /* EditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7820D32A601FA1004C84A5 /* EditProfileViewModel.swift */; };
 		0A7820D62A602436004C84A5 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7820D52A602436004C84A5 /* UserViewModel.swift */; };
 		0A7820D82A6024B5004C84A5 /* AuthUserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7820D72A6024B5004C84A5 /* AuthUserModel.swift */; };
+		0A8EB34A2A6A831600DD02CF /* ValidationResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8EB3492A6A831600DD02CF /* ValidationResult.swift */; };
+		0A8EB34C2A6A8A4500DD02CF /* EditProfileValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A8EB34B2A6A8A4500DD02CF /* EditProfileValidator.swift */; };
 		0A95A7492A65718B00C700A9 /* CustomLoaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A95A7482A65718B00C700A9 /* CustomLoaderModifier.swift */; };
 		0A9634822A5C40BC00311102 /* CountryCodes.json in Resources */ = {isa = PBXBuildFile; fileRef = 0A9634812A5C40BC00311102 /* CountryCodes.json */; };
 		0A99C82A2A2F21B10084B3D4 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A99C8292A2F21B10084B3D4 /* Home.swift */; };
@@ -115,6 +117,8 @@
 		0A7820D32A601FA1004C84A5 /* EditProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileViewModel.swift; sourceTree = "<group>"; };
 		0A7820D52A602436004C84A5 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		0A7820D72A6024B5004C84A5 /* AuthUserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthUserModel.swift; sourceTree = "<group>"; };
+		0A8EB3492A6A831600DD02CF /* ValidationResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationResult.swift; sourceTree = "<group>"; };
+		0A8EB34B2A6A8A4500DD02CF /* EditProfileValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileValidator.swift; sourceTree = "<group>"; };
 		0A95A7482A65718B00C700A9 /* CustomLoaderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLoaderModifier.swift; sourceTree = "<group>"; };
 		0A9634812A5C40BC00311102 /* CountryCodes.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = CountryCodes.json; sourceTree = "<group>"; };
 		0A99C8292A2F21B10084B3D4 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
@@ -274,8 +278,10 @@
 		0A5B84FB2A5C011F0094E8AC /* Validator */ = {
 			isa = PBXGroup;
 			children = (
+				0A8EB3482A6A82FA00DD02CF /* Validations */,
 				0A5B84FC2A5C01340094E8AC /* LoginValidator.swift */,
 				0A5B84FE2A5C015A0094E8AC /* SignUpValidator.swift */,
+				0A8EB34B2A6A8A4500DD02CF /* EditProfileValidator.swift */,
 			);
 			path = Validator;
 			sourceTree = "<group>";
@@ -334,6 +340,14 @@
 				0A7820D12A601F26004C84A5 /* EditProfileView.swift */,
 			);
 			path = ProfileViewDetails;
+			sourceTree = "<group>";
+		};
+		0A8EB3482A6A82FA00DD02CF /* Validations */ = {
+			isa = PBXGroup;
+			children = (
+				0A8EB3492A6A831600DD02CF /* ValidationResult.swift */,
+			);
+			path = Validations;
 			sourceTree = "<group>";
 		};
 		0A95A7472A65716D00C700A9 /* CustomModifiers */ = {
@@ -662,6 +676,7 @@
 				0AB6F8262A30853A004A40C6 /* ProductsModel.swift in Sources */,
 				0A5A40AF2A30C2F700BBDF50 /* CategoryRow.swift in Sources */,
 				0ADDFFD72A2DC04C00B42C2D /* SwiftUIDemoApp.swift in Sources */,
+				0A8EB34A2A6A831600DD02CF /* ValidationResult.swift in Sources */,
 				0A5A40A82A30C01300BBDF50 /* URLEndpoint.swift in Sources */,
 				0AB6F8202A3083AF004A40C6 /* ProductsResources.swift in Sources */,
 				0A99C8302A2F21FC0084B3D4 /* ListView.swift in Sources */,
@@ -669,6 +684,7 @@
 				0AE97AAE2A30E23800723033 /* CustomBackButton.swift in Sources */,
 				0A0E95BE2A654D8E0046DC2F /* ListViewDetails.swift in Sources */,
 				0A3D39772A31D84E00C5938D /* UsersModel.swift in Sources */,
+				0A8EB34C2A6A8A4500DD02CF /* EditProfileValidator.swift in Sources */,
 				0A5A409F2A30AD9A00BBDF50 /* PostsModel.swift in Sources */,
 				0A7820D22A601F26004C84A5 /* EditProfileView.swift in Sources */,
 				0A5A409D2A30AD2A00BBDF50 /* SearchViewModel.swift in Sources */,

@@ -1,14 +1,15 @@
 //
-//  SignUpValidator.swift
+//  EditProfileValidator.swift
 //  SwiftUIDemo
 //
-//  Created by Neosoft on 10/07/23.
+//  Created by Neosoft on 21/07/23.
 //
 
 import Foundation
 
-struct SignUpValidator {
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String, password: String, confirmPassword: String) -> ValidationResult {
+struct EditProfileValidator {
+    
+    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String) -> ValidationResult {
         guard userName.isNotEmpty else {
             return .failure(StringConstants.LoginSignUp.userNameBlank)
         }
@@ -27,20 +28,9 @@ struct SignUpValidator {
         guard userMobile.isValidMobile else {
             return .failure(StringConstants.LoginSignUp.userMobileValid)
         }
-//        let dob = DateFormatter.longDateFormatter.string(from: userDOB)
         guard userDOB.isNotEmpty else {
             return .failure(StringConstants.LoginSignUp.userDOBBlank)
-        }
-        guard password.isNotEmpty else {
-            return .failure(StringConstants.LoginSignUp.passwordBlank)
-        }
-        guard confirmPassword.isNotEmpty else {
-            return .failure(StringConstants.LoginSignUp.confirmPasswordBlank)
-        }
-        guard password == confirmPassword else {
-            return .failure(StringConstants.LoginSignUp.confirmPasswordMatch)
         }
         return .success
     }
 }
-

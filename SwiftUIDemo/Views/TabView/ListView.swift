@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ListView: View {
-    @ObservedObject var listVM : ListViewModel = ListViewModel()
+    @ObservedObject var viewModel : ListViewModel = ListViewModel()
     @State private var gridVLayout : [GridItem] = [GridItem()]
     
     var body: some View {
@@ -16,7 +16,7 @@ struct ListView: View {
             VStack{
                 ScrollView(.vertical, showsIndicators: false) {
                     LazyVGrid(columns: gridVLayout) {
-                        ForEach(listVM.arrUsers, id: \.id) { userData in
+                        ForEach(viewModel.arrUsers, id: \.id) { userData in
                             NavigationLink(destination: {
                                 ListViewDetails(userData: userData)
                             }, label: {
@@ -26,10 +26,13 @@ struct ListView: View {
                     }.padding(.all, 10)
                 }
                 .onAppear(perform: {
-                    listVM.fetchUsersList()
+                    viewModel.fetchUsersList()
                 })
-                .modifier(CustomLoaderModifier(isLoading: self.$listVM.isLoading))
+//                .modifier(CustomLoaderModifier(isLoading: self.$listVM.isLoading))
             }.navigationBarTitle("USER'S LIST",displayMode: .inline)
+        }
+        .overlay{
+            LoadingView(showProgress: $viewModel.isLoading)
         }
     }
 }

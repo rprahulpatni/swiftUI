@@ -129,8 +129,11 @@ struct SignUpView: View {
                 .navigationBarBackButtonHidden()
                 .navigationBarItems(leading: CustomBackButton())
             }
-            .modifier(CustomLoaderModifier(isLoading: $viewModel.isLoading))
+//            .modifier(CustomLoaderModifier(isLoading: $viewModel.isLoading))
             .modifier(CustomHideKeyboardModifier())
+        }
+        .overlay{
+            LoadingView(showProgress: $viewModel.isLoading)
         }
     }
 }

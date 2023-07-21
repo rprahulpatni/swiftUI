@@ -9,44 +9,41 @@ import SwiftUI
 import Firebase
 
 struct Home: View {
-    @ObservedObject var homeVM : HomeViewModel = HomeViewModel()
+    @ObservedObject var viewModel : HomeViewModel = HomeViewModel()
     
     @State private var gridVLayout : [GridItem] = [GridItem()]
     
     var body: some View {
         NavigationStack{
-            VStack{
-                ScrollView(.vertical, showsIndicators: false) {
-                    LazyVGrid(columns: gridVLayout) {
-                        ForEach(homeVM.arrUsers, id: \.id) { userData in
-                            NavigationLink(destination: {
-                                HomeViewDetails(userData: userData)
-                            }, label: {
-                                UsersListView(usersData: userData)
-                            })
-                            if userData.id == homeVM.arrUsers.last?.id {
-                                if homeVM.skip < homeVM.totalPages {
-                                    ProgressView(label: {
-                                        Text("Loading")
-                                    }).progressViewStyle(.circular)
-                                        .tint(.red)
-                                        .onAppear(perform: {
-                                            homeVM.getUsersList(false)
-                                        })
-                                }
+            ScrollView(.vertical, showsIndicators: false) {
+                LazyVGrid(columns: gridVLayout) {
+                    ForEach(viewModel.arrUsers, id: \.id) { userData in
+                        NavigationLink(destination: {
+                            HomeViewDetails(userData: userData)
+                        }, label: {
+                            UsersListView(usersData: userData)
+                        })
+                        if userData.id == viewModel.arrUsers.last?.id {
+                            if viewModel.skip < viewModel.totalPages {
+                                ProgressView(label: {
+                                    Text("Loading")
+                                }).progressViewStyle(.circular)
+                                    .tint(.red)
+                                    .onAppear(perform: {
+                                        viewModel.getUsersList(false)
+                                    })
                             }
                         }
-                    }.padding(.all, 10)
-                }.onAppear(perform: {
-                    homeVM.getUsersList(true)
-                })
-                .modifier(CustomLoaderModifier(isLoading: self.$homeVM.isLoading))
-            }.navigationBarTitle("HOME",displayMode: .inline)
+                    }
+                }.padding(.all, 10)
+            }.onAppear(perform: {
+                viewModel.getUsersList(true)
+            })
+            .navigationBarTitle("HOME",displayMode: .inline)
+            //.modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
+        }.overlay{
+            LoadingView(showProgress: $viewModel.isLoading)
         }
-    }
-    
-    func action_Logout(){
-        
     }
 }
 

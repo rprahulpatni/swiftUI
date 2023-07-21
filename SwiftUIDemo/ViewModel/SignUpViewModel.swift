@@ -13,11 +13,7 @@ import UIKit
 import PhotosUI
 import SwiftUI
 
-protocol iSignUpViewModel {
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String, password: String, confirmPassword: String)-> SignUpValidator
-}
-
-class SignUpViewModel: iSignUpViewModel, ObservableObject {
+class SignUpViewModel: ObservableObject {
     @Published var userProfilePic = ""
     @Published var userName = ""
     @Published var userEmail = ""
@@ -45,45 +41,11 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
         self.sessionManager = iSessionManager
     }
     
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String, password: String, confirmPassword: String) -> SignUpValidator {
-        guard userName.isNotEmpty else {
-            return .failure(.userName, StringConstants.LoginSignUp.userNameBlank)
-        }
-        guard userEmail.isNotEmpty else {
-            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailBlank)
-        }
-        guard userEmail.isValidEmail else {
-            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailValid)
-        }
-        guard userCountryCode.isNotEmpty else {
-            return .failure(.userCountryCode, StringConstants.LoginSignUp.userCountryCodeBlank)
-        }
-        guard userMobile.isNotEmpty else {
-            return .failure(.userMobile, StringConstants.LoginSignUp.userMobileBlank)
-        }
-        guard userMobile.isValidMobile else {
-            return .failure(.userEmail, StringConstants.LoginSignUp.userMobileValid)
-        }
-//        let dob = DateFormatter.longDateFormatter.string(from: userDOB)
-        guard userDOB.isNotEmpty else {
-            return .failure(.userMobile, StringConstants.LoginSignUp.userDOBBlank)
-        }
-        guard password.isNotEmpty else {
-            return .failure(.userPassword, StringConstants.LoginSignUp.passwordBlank)
-        }
-        guard confirmPassword.isNotEmpty else {
-            return .failure(.userConfirmPassword, StringConstants.LoginSignUp.confirmPasswordBlank)
-        }
-        guard password == confirmPassword else {
-            return .failure(.userConfirmPassword, StringConstants.LoginSignUp.confirmPasswordMatch)
-        }
-        return .success
-    }
-    
     func signUp() {
         self.isLoading = true
-        let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: DateFormatter.longDateFormatter.string(from: self.selectedDOB), password: self.userPassword, confirmPassword: self.userConfirmPassword)
-        switch response {
+        hideKeyboard()
+        let validationResult = SignUpValidator().validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: DateFormatter.longDateFormatter.string(from: self.selectedDOB), password: self.userPassword, confirmPassword: self.userConfirmPassword)
+        switch validationResult {
         case .success:
             sessionManager?.action_Signup(self.userEmail, self.userPassword) { [weak self] (success, error, result) in
                 guard let self = self else { return }
@@ -98,8 +60,7 @@ class SignUpViewModel: iSignUpViewModel, ObservableObject {
                     self.uploadUserProfile()
                 }
             }
-        case .failure(let type, let msg):
-            print(type, msg)
+        case .failure(let msg):
             self.showAlert = true
             self.isLoading = false
             self.errorMessage = msg

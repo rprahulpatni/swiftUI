@@ -6,11 +6,17 @@
 //
 
 import Foundation
-enum LoginValidator {
-    case success
-    case failure(LoginValidationType, String)
-}
-enum LoginValidationType{
-    case userEmail
-    case userPassword
+struct LoginValidations {
+    func validateUser(userEmail: String, password: String) -> ValidationResult {
+        guard userEmail.isNotEmpty else {
+            return .failure(StringConstants.LoginSignUp.userEmailBlank)
+        }
+        guard userEmail.isValidEmail else {
+            return .failure(StringConstants.LoginSignUp.userEmailValid)
+        }
+        guard password.isNotEmpty else {
+            return .failure(StringConstants.LoginSignUp.passwordBlank)
+        }
+        return .success
+    }
 }

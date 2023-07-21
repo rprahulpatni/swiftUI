@@ -8,22 +8,25 @@
 import SwiftUI
 
 struct Search: View {
-    @ObservedObject var searchVM: SearchViewModel = SearchViewModel()
+    @ObservedObject var viewModel: SearchViewModel = SearchViewModel()
     
     var body: some View {
         NavigationStack {
                 VStack {
-                    List(searchVM.filteredPost, id: \.id) { products in
+                    List(viewModel.filteredPost, id: \.id) { products in
                         ProductsListCell(products: products)
                             .background(.clear)
                     }.padding(.all, -10)
                 }.listStyle(.plain)
                     .onAppear(perform: {
-                        searchVM.getProductsList()
+                        viewModel.getProductsList()
                     })
-                    .modifier(CustomLoaderModifier(isLoading: self.$searchVM.isLoading))
+//                    .modifier(CustomLoaderModifier(isLoading: self.$viewModel.isLoading))
                     .navigationBarTitle("PRODUCTS", displayMode: .inline)
-                    .searchable(text: $searchVM.searchText)
+                    .searchable(text: $viewModel.searchText)
+        }
+        .overlay{
+            LoadingView(showProgress: $viewModel.isLoading)
         }
         //        NavigationStack{
         //            ZStack {

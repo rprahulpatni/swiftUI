@@ -9,7 +9,7 @@ import SwiftUI
 import Firebase
 
 struct LoginView: View {
-//    @State private var shouldNavigate : Bool = false
+    //    @State private var shouldNavigate : Bool = false
     @StateObject private var viewModel: LoginViewModel
     
     init(viewModel: LoginViewModel) {
@@ -17,42 +17,43 @@ struct LoginView: View {
     }
     
     var body: some View {
-        ZStack {
-            NavigationStack{
-                ScrollView(.vertical, showsIndicators: false) {
-                    Spacer()
-                    VStack() {
-                        TextField("Email", text: $viewModel.email)
-                            .keyboardType(.emailAddress)
-                            .textFieldStyle(CustomTxtFieldStyle())
-                            .padding(.bottom, 5)
-                        SecureField("Password", text: $viewModel.password)
-                            .textFieldStyle(CustomTxtFieldStyle())
-                            .padding(.bottom)
-                        Button(action: {
-                            viewModel.login()
-                        }, label: {
-                            Text("Sign In")
-                        }).buttonStyle(CustomBtn())
-                            .alert(isPresented: $viewModel.showAlert) {
-                                if  viewModel.isLoggedIn {
-                                    return Alert(title: Text("Alert"), message: Text("Logged In Successfull !!"), dismissButton: .default(Text("OK")) {
-                                        self.viewModel.sessionManager?.loggedUser = self.viewModel.loggedInUser
-                                    })
-                                } else  {
-                                    return Alert(title: Text("Alert"), message: Text(viewModel.errorMessage), dismissButton: .default(Text("OK")) {
-                                    })
-                                }
+        NavigationStack{
+            ScrollView(.vertical, showsIndicators: false) {
+                Spacer()
+                VStack() {
+                    TextField("Email", text: $viewModel.email)
+                        .keyboardType(.emailAddress)
+                        .textFieldStyle(CustomTxtFieldStyle())
+                        .padding(.bottom, 5)
+                    SecureField("Password", text: $viewModel.password)
+                        .textFieldStyle(CustomTxtFieldStyle())
+                        .padding(.bottom)
+                    Button(action: {
+                        viewModel.login()
+                    }, label: {
+                        Text("Sign In")
+                    }).buttonStyle(CustomBtn())
+                        .alert(isPresented: $viewModel.showAlert) {
+                            if  viewModel.isLoggedIn {
+                                return Alert(title: Text("Alert"), message: Text("Logged In Successfull !!"), dismissButton: .default(Text("OK")) {
+                                    self.viewModel.sessionManager?.loggedUser = self.viewModel.loggedInUser
+                                })
+                            } else  {
+                                return Alert(title: Text("Alert"), message: Text(viewModel.errorMessage), dismissButton: .default(Text("OK")) {
+                                })
                             }
-                    }
-                    .padding()
-                    .navigationBarTitle("LOGIN", displayMode: .inline)
-                    .navigationBarBackButtonHidden()
-                    .navigationBarItems(leading: CustomBackButton())
+                        }
                 }
+                .padding()
+                .navigationBarTitle("LOGIN", displayMode: .inline)
+                .navigationBarBackButtonHidden()
+                .navigationBarItems(leading: CustomBackButton())
             }
-            .modifier(CustomLoaderModifier(isLoading: $viewModel.isLoading))
+            //.modifier(CustomLoaderModifier(isLoading: $viewModel.isLoading))
             .modifier(CustomHideKeyboardModifier())
+        }
+        .overlay{
+            LoadingView(showProgress: $viewModel.isLoading)
         }
     }
 }

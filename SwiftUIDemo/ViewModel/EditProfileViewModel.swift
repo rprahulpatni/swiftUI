@@ -13,11 +13,7 @@ import UIKit
 import SwiftUI
 import PhotosUI
 
-protocol iEditProfileViewModel {
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String)-> EditProfileValidator
-}
-
-class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
+class EditProfileViewModel: ObservableObject {
     
     @Published var user: AuthUserData?
     @Published var userId = ""
@@ -82,41 +78,16 @@ class EditProfileViewModel: iEditProfileViewModel, ObservableObject {
     //        }
     //    }
     
-    func validateUser(userName: String, userEmail: String, userCountryCode: String, userMobile: String, userDOB: String) -> EditProfileValidator {
-        guard userName.isNotEmpty else {
-            return .failure(.userName, StringConstants.LoginSignUp.userNameBlank)
-        }
-        guard userEmail.isNotEmpty else {
-            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailBlank)
-        }
-        guard userEmail.isValidEmail else {
-            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailValid)
-        }
-        guard userCountryCode.isNotEmpty else {
-            return .failure(.userCountryCode, StringConstants.LoginSignUp.userCountryCodeBlank)
-        }
-        guard userMobile.isNotEmpty else {
-            return .failure(.userMobile, StringConstants.LoginSignUp.userMobileBlank)
-        }
-        guard userMobile.isValidMobile else {
-            return .failure(.userEmail, StringConstants.LoginSignUp.userMobileValid)
-        }
-        guard userDOB.isNotEmpty else {
-            return .failure(.userMobile, StringConstants.LoginSignUp.userDOBBlank)
-        }
-        return .success
-    }
-    
     func editProfile() {
         self.isLoading = true
-        let response = self.validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: DateFormatter.longDateFormatter.string(from: self.selectedDOB))
+        hideKeyboard()
+        let response = EditProfileValidator().validateUser(userName: self.userName, userEmail: self.userEmail, userCountryCode: self.userCountryCode, userMobile: self.userMobile, userDOB: DateFormatter.longDateFormatter.string(from: self.selectedDOB))
         switch response {
         case .success:
             self.showAlert = false
             self.uploadUserProfile()
             break
-        case .failure(let type, let msg):
-            print(type, msg)
+        case .failure(let msg):
             self.showAlert = true
             self.isLoading = false
             self.errorMessage = msg

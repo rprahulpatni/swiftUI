@@ -8,11 +8,11 @@
 import Foundation
 import Firebase
 
-protocol iLoginViewModel {
-    func validateUser(userEmail:String, password:String)-> LoginValidator
-}
+//protocol iLoginViewModel {
+//    func validateUser(userEmail:String, password:String)-> login
+//}
 
-class LoginViewModel: iLoginViewModel, ObservableObject {
+class LoginViewModel: ObservableObject {
     @Published var email = ""
     @Published var password = ""
     @Published var errorMessage = ""
@@ -26,23 +26,24 @@ class LoginViewModel: iLoginViewModel, ObservableObject {
         self.sessionManager = iSessionManager
     }
     
-    func validateUser(userEmail: String, password: String) -> LoginValidator {
-        guard userEmail.isNotEmpty else {
-            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailBlank)
-        }
-        guard userEmail.isValidEmail else {
-            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailValid)
-        }
-        guard password.isNotEmpty else {
-            return .failure(.userPassword, StringConstants.LoginSignUp.passwordBlank)
-        }
-        return .success
-    }
+//    func validateUser(userEmail: String, password: String) -> LoginValidator {
+//        guard userEmail.isNotEmpty else {
+//            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailBlank)
+//        }
+//        guard userEmail.isValidEmail else {
+//            return .failure(.userEmail, StringConstants.LoginSignUp.userEmailValid)
+//        }
+//        guard password.isNotEmpty else {
+//            return .failure(.userPassword, StringConstants.LoginSignUp.passwordBlank)
+//        }
+//        return .success
+//    }
     
     func login() {
         self.isLoading = true
-        let response = self.validateUser(userEmail: self.email, password: self.password)
-        switch response {
+        hideKeyboard()
+        let validationResult = LoginValidations().validateUser(userEmail: self.email, password: self.password)
+        switch validationResult {
         case .success:
             sessionManager?.action_Login(self.email, self.password) { [weak self] (success, error, result) in
                 guard let self = self else { return }
@@ -59,8 +60,7 @@ class LoginViewModel: iLoginViewModel, ObservableObject {
                 }
             }
             
-        case .failure(let type, let msg):
-            print(type, msg)
+        case .failure(let msg):
             self.errorMessage = msg
             self.showAlert = true
             self.isLoading = false
