@@ -41,6 +41,6 @@ struct UsersView: View {
 
 struct UsersView_Previews: PreviewProvider {
     static var previews: some View {
-        UsersView(usersData: AuthUserData(profilePic: "", name:  "", email: "", dob: "", gender: "", countryCode: "", mobile: "", userId: ""))
+        UsersView(usersData: AuthUserData(profilePic: "", name:  "Rahul", email: "rp@mailinator.com", dob: "", gender: "", countryCode: "+91", mobile: "9999889988", userId: ""))
     }
 }

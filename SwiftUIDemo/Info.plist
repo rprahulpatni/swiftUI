@@ -2,6 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+	</dict>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UIColorName</key>
@@ -9,9 +14,5 @@
 		<key>UIImageName</key>
 		<string>logo</string>
 	</dict>
-    <key>NSPhotoLibraryAddUsageDescription</key>
-    <string>App need to access your library for setting user profile picture.</string>
-    <key>NSPhotoLibraryUsageDescription</key>
-    <string>App need to access your library for setting user profile picture.</string>
 </dict>
 </plist>

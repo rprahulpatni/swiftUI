@@ -22,15 +22,21 @@ final class LocalDataHelper: ObservableObject {
 
 struct BundleDecoderFromJson {
     static func decodeLandmarkFromBundleToJson() -> [Landmark] {
-        let landmarkJson = Bundle.main.path(forResource: "landmarkData", ofType: "json")
+        let landmarkJson = Bundle.main.path(forResource: "LocalLandmarkData", ofType: "json")
         let landmarks = try! Data(contentsOf: URL(fileURLWithPath: landmarkJson!), options: .alwaysMapped)
         return try! JSONDecoder().decode([Landmark].self, from: landmarks)
     }
     
     static func decodeCountryListFromBundleToJson() -> [CountryList] {
-        let countryJson = Bundle.main.path(forResource: "CountryCodes", ofType: "json")
+        let countryJson = Bundle.main.path(forResource: "LocalCountryCodes", ofType: "json")
         let countryData = try! Data(contentsOf: URL(fileURLWithPath: countryJson!), options: .alwaysMapped)
         return try! JSONDecoder().decode([CountryList].self, from: countryData)
+    }
+    
+    static func decodeVideoListFromBundleToJson() -> [VideoModel] {
+        let countryJson = Bundle.main.path(forResource: "LocalVideoData", ofType: "json")
+        let countryData = try! Data(contentsOf: URL(fileURLWithPath: countryJson!), options: .alwaysMapped)
+        return try! JSONDecoder().decode([VideoModel].self, from: countryData)
     }
     
 //    static func decodeCountryDataFromBundleToJson() -> [CountryModel] {

@@ -13,25 +13,26 @@ struct ListView: View {
     
     var body: some View {
         NavigationStack{
-            VStack{
-                ScrollView(.vertical, showsIndicators: false) {
-                    LazyVGrid(columns: gridVLayout) {
-                        ForEach(viewModel.arrUsers, id: \.id) { userData in
-                            NavigationLink(destination: {
-                                ListViewDetails(userData: userData)
-                            }, label: {
-                                UsersView(usersData: userData)
-                            })
+            List{
+                ForEach(viewModel.arrUsers, id: \.id) { userData in
+                    //For hiding next arrow
+                    ZStack {
+                        UsersView(usersData: userData)
+                        NavigationLink(destination: ListViewDetails(userData: userData)) {
+                            EmptyView()
                         }
-                    }.padding(.all, 10)
+                        .opacity(0)
+                    }.padding(.all, -5)
                 }
+                .listRowSeparator(.hidden,edges: .all)
+                .listRowBackground(Color.clear)
+            }.padding(.all, -5)
+                .listStyle(.plain)
+                .navigationBarTitle("USER'S LIST",displayMode: .inline)
                 .onAppear(perform: {
                     viewModel.fetchUsersList()
                 })
-//                .modifier(CustomLoaderModifier(isLoading: self.$listVM.isLoading))
-            }.navigationBarTitle("USER'S LIST",displayMode: .inline)
-        }
-        .overlay{
+        }.overlay{
             LoadingView(showProgress: $viewModel.isLoading)
         }
     }

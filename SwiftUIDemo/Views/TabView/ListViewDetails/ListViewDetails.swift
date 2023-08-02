@@ -12,13 +12,14 @@ struct ListViewDetails: View {
     var userData: AuthUserData?
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                CustomUserForm(user: userData)
-            }.toolbar(.hidden, for: .tabBar)
-        }.navigationBarTitle(userData?.name ?? "", displayMode: .inline)
+        //        NavigationStack {
+        VStack {
+            CustomUserForm(user: userData)
+        }.toolbar(.hidden, for: .tabBar)
+            .navigationBarTitle(userData?.name ?? "", displayMode: .inline)
             .navigationBarBackButtonHidden()
             .navigationBarItems(leading: CustomBackButton())
+        //        }
     }
 }
 

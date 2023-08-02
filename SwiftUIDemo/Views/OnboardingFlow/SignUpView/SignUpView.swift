@@ -10,14 +10,6 @@ import PhotosUI
 import Firebase
 import FirebaseStorage
 
-struct CountryList: Hashable, Codable {
-    //    var id = UUID()
-    var name: String?
-    var code: String?
-    var dial_code: String?
-    var flag: String?
-}
-
 struct SignUpView: View {
     
     var dateClosedRange: ClosedRange<Date> {
