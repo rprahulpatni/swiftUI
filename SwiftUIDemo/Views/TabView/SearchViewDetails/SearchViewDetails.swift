@@ -22,7 +22,7 @@ struct SearchViewDetails: View {
                 ZStack(alignment: .topTrailing) {
                     if isLandscapeActive {
                         // Landscape view (fullscreen video player)
-                        LandscapeView(isLandscapeActive: $isLandscapeActive, urlString: videoData!.sources)
+                        //LandscapeView(isLandscapeActive: $isLandscapeActive, urlString: videoData!.sources)
                     } else {
                         CustomVideoPlayerView(videoURL: URL(string: videoData!.sources)!)
                             .frame(height: 250)

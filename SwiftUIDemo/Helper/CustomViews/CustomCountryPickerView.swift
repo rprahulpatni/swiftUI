@@ -39,7 +39,9 @@ struct CustomCountryPickerView: View {
                     }
                 })
             }.listStyle(.plain)
-        }//.modifier(CustomHideKeyboardModifier())
+        } .onDisappear{
+            hideKeyboard()
+        }
     }
 }
 

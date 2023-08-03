@@ -9,7 +9,7 @@ import SwiftUI
 
 //struct CustomDatePickerModifier_Previews: PreviewProvider {
 //    static var previews: some View {
-//        CustomDatePickerModifier()
+//        CustomDatePickerModifier(selectedDate: .constant(Date()), isPresented:  .constant(true))
 //    }
 //}
 

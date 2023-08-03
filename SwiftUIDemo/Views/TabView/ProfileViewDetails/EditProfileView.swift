@@ -20,6 +20,7 @@ struct EditProfileView: View {
         return min...max
     }
     
+    @State private var isDatePickerVisible = false
     @State private var isPickerVisible = false
     @State private var isMenuOpen = false
     @StateObject private var viewModel: EditProfileViewModel
@@ -52,10 +53,26 @@ struct EditProfileView: View {
                                 .textFieldStyle(CustomTxtFieldStyle())
                         }
                         .padding(.bottom, 5)
-                        DatePicker("Select DOB", selection: $viewModel.selectedDOB, in: dateClosedRange, displayedComponents: .date)
-                            .padding(.all, 10)
-                            .background(CustomGraditantView())
+                        TextField("Select DOB", text: $viewModel.userDOB)
+                            .textFieldStyle(CustomTxtFieldStyle())
+                            .keyboardType(.emailAddress)
                             .padding(.bottom, 5)
+                            .onTapGesture {
+                                isDatePickerVisible = true
+                                hideKeyboard()
+                            }
+                            .onDisappear {
+                                hideKeyboard()
+                            }
+                            .sheet(isPresented: $isDatePickerVisible) {
+                                CustomDatePickerView(isPickerVisible: $isDatePickerVisible, selectedDate: $viewModel.selectedDOB, selectedDateString: $viewModel.userDOB, placeholder: "")
+                                    .presentationDragIndicator(.hidden)
+                                    .presentationDetents([.height(285)])
+                            }
+//                        DatePicker("Select DOB", selection: $viewModel.selectedDOB, in: dateClosedRange, displayedComponents: .date)
+//                            .padding(.all, 10)
+//                            .background(CustomGraditantView())
+//                            .padding(.bottom, 5)
                         TextField("Gender", text: $viewModel.userGender)
                             .textFieldStyle(CustomTxtFieldStyle())
                             .padding(.bottom, 20)
